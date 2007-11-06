@@ -1,23 +1,26 @@
 %define	module	Tk
 %define	name	perl-%{module}
 %define	version	804.027
-%define release	%mkrel 7
+%define release	%mkrel 8
 
 Summary:	Tk modules for Perl
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Group:		Development/Perl
-BuildRequires:	perl-devel pwlib-devel XFree86-devel
 License:	GPL or Artistic
-URL:		http://www.cpan.org/
-Source:		ftp://sunsite.doc.ic.ac.uk/packages/CPAN/modules/by-module/%{module}/%{module}-%{version}.tar.bz2
-Provides:	perl/tk ptk pTk
-Requires:	perl
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Provides:	perl(Tk::LabRadio) perl(Tk::TextReindex)
+URL:            http://search.cpan.org/dist/%{module}
+Source:         http://www.cpan.org/modules/by-module/Tk/%{module}-%{version}.tar.gz
+Provides:	perl(Tk::TextReindex)
+Provides:	perl(Tk::LabRadio)
 # to remove on upgrade ( misc)
 Obsoletes:  perl-Tk-PNG
+BuildRequires:	perl-devel
+BuildRequires:	pwlib-devel
+BuildRequires:	XFree86-devel
+BuildRequires:	libxft-devel
+BuildRequires:	libxrender-devel
+Buildroot:	%{_tmppath}/%{name}-%{version}
 
 %package	devel
 Summary:	Tk modules for Perl (development package)
@@ -67,25 +70,25 @@ perl -pi -e "s,(/usr/X11(R6|\\*)|\\\$X11|\(\?:)/lib,\1/%{_lib},g" \
 perl -pi -e "s#--center#-c#" ./Tk/MMutil.pm
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor
+%{__perl} Makefile.PL INSTALLDIRS=vendor XFT=1
 %make OPTIMIZE="$RPM_OPT_FLAGS" LD_RUN_PATH=""
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
-%{__chmod} 644 $RPM_BUILD_ROOT%{_mandir}/man3*/*
+%{__chmod} 644 %{buildroot}%{_mandir}/man3*/*
 
 # Remove unpackaged files, add them if you find a use
 # Tie::Watch is packaged separately
-rm -f $RPM_BUILD_ROOT%{perl_vendorarch}/{Tie/Watch.pm,Tk/prolog.ps}
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/{ptk{ed,sh},widget}.1*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man3/Tie::Watch.3pm*
+rm -f %{buildroot}%{perl_vendorarch}/{Tie/Watch.pm,Tk/prolog.ps}
+rm -f %{buildroot}%{_mandir}/man1/{ptk{ed,sh},widget}.1*
+rm -f %{buildroot}%{_mandir}/man3/Tie::Watch.3pm*
 
 ## compress all .pm files (as using perl-PerlIO-gzip).
-#find $RPM_BUILD_ROOT -name "*.pm" | xargs gzip -9
+#find %{buildroot} -name "*.pm" | xargs gzip -9
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
