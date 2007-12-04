@@ -17,7 +17,7 @@ Provides:	perl(Tk::LabRadio)
 Obsoletes:  perl-Tk-PNG
 BuildRequires:	perl-devel
 BuildRequires:	pwlib-devel
-BuildRequires:	XFree86-devel
+BuildRequires:	X11-devel
 BuildRequires:	libxft-devel
 BuildRequires:	libxrender-devel
 Buildroot:	%{_tmppath}/%{name}-%{version}
