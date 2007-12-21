@@ -20,6 +20,7 @@ BuildRequires:	pwlib-devel
 BuildRequires:	X11-devel
 BuildRequires:	libxft-devel
 BuildRequires:	libxrender-devel
+Buildroot:	%{_tmppath}/%{name}-%{version}
 
 %package	devel
 Summary:	Tk modules for Perl (development package)
