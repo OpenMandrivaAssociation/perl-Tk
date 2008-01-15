@@ -1,7 +1,7 @@
 %define	module	Tk
 %define	name	perl-%{module}
 %define	version	804.028
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 Summary:	Tk modules for Perl
 Name:		%{name}
