@@ -1,12 +1,9 @@
 %define	module	Tk
-%define	name	perl-%{module}
-%define	version	804.028
-%define release	%mkrel 3
 
+Name:		perl-%{module}
+Version:	804.028
+Release:	%mkrel 4
 Summary:	Tk modules for Perl
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
 Group:		Development/Perl
 License:	GPL or Artistic
 URL:            http://search.cpan.org/dist/%{module}
@@ -20,7 +17,7 @@ BuildRequires:	pwlib-devel
 BuildRequires:	X11-devel
 BuildRequires:	libxft-devel
 BuildRequires:	libxrender-devel
-Buildroot:	%{_tmppath}/%{name}-%{version}
+Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %package	devel
 Summary:	Tk modules for Perl (development package)
