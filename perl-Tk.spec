@@ -2,7 +2,7 @@
 
 Name:		perl-%{module}
 Version:	804.028
-Release:	%mkrel 6
+Release:	%mkrel 7
 Summary:	Tk modules for Perl
 Group:		Development/Perl
 License:	GPL or Artistic
@@ -18,6 +18,8 @@ Provides:	perl(Tk::LabRadio)
 # to remove on upgrade (misc)
 Obsoletes:	perl-Tk-PNG
 BuildRequires:	perl-devel
+BuildRequires:	jpeg-devel
+BuildRequires:	png-devel
 BuildRequires:	pwlib-devel
 BuildRequires:	X11-devel
 BuildRequires:	libxft-devel
@@ -27,12 +29,12 @@ Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 %package	devel
 Summary:	Tk modules for Perl (development package)
 Group:		Development/C
-Requires:	perl-Tk = %{version}
+Requires:	perl-Tk = %{version}-%{release}
 
 %package	doc
 Summary:	Tk modules for Perl (documentation package)
 Group:		Development/Perl
-Requires:	perl-Tk = %{version}
+Requires:	perl-Tk = %{version}-%{release}
 
 %description
 This package provides the modules and Tk code for Perl/Tk,
