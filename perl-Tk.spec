@@ -2,16 +2,21 @@
 
 Name:		perl-%{module}
 Version:	804.028
-Release:	%mkrel 5
+Release:	%mkrel 6
 Summary:	Tk modules for Perl
 Group:		Development/Perl
 License:	GPL or Artistic
-URL:            http://search.cpan.org/dist/%{module}
-Source:         http://www.cpan.org/modules/by-module/Tk/%{module}-%{version}.tar.gz
+URL:		http://search.cpan.org/dist/%{module}
+Source0:	http://www.cpan.org/modules/by-module/Tk/%{module}-%{version}.tar.gz
+Patch0:		perl-Tk-widget.patch
+# modified version of http://ftp.de.debian.org/debian/pool/main/p/perl-tk/perl-tk_804.027-8.diff.gz
+Patch1:		perl-Tk-debian.patch
+# fix segfaults as in #235666 because of broken cashing code
+Patch2:		perl-Tk-seg.patch
 Provides:	perl(Tk::TextReindex)
 Provides:	perl(Tk::LabRadio)
-# to remove on upgrade ( misc)
-Obsoletes:  perl-Tk-PNG
+# to remove on upgrade (misc)
+Obsoletes:	perl-Tk-PNG
 BuildRequires:	perl-devel
 BuildRequires:	pwlib-devel
 BuildRequires:	X11-devel
@@ -59,6 +64,17 @@ This is the documentation package.
 
 %prep
 %setup -q -n %{module}-%{version}
+chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
+# fix for widget as docs
+%patch0
+%{__perl} -pi -e \
+'s,\@demopath\@,%{_datadir}/doc/%{name}-%{version}/demos,g' \
+%{_builddir}/Tk-%{version}/demos/widget
+# debian patch
+%patch1 -p1
+# patch to fix #235666 ... seems like caching code is broken
+%patch2
+
 find . -type f | xargs perl -pi -e 's|^#!.*/bin/perl\S*|#!/usr/bin/perl|'
 # Make it lib64 aware, avoid patch
 perl -pi -e "s,(/usr/X11(R6|\\*)|\\\$X11|\(\?:)/lib,\1/%{_lib},g" \
@@ -68,7 +84,7 @@ perl -pi -e "s#--center#-c#" ./Tk/MMutil.pm
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor XFT=1
-%make OPTIMIZE="$RPM_OPT_FLAGS" LD_RUN_PATH=""
+%make OPTIMIZE="%{optflags}" LD_RUN_PATH=""
 
 %install
 rm -rf %{buildroot}
@@ -125,5 +141,3 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/Tk.pod
 %{perl_vendorarch}/Tk/*.pod
 %{perl_vendorarch}/Tk/README.Adjust
-
-
