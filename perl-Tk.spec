@@ -2,7 +2,7 @@
 
 Name:		perl-%{module}
 Version:	804.028
-Release:	%mkrel 8
+Release:	%mkrel 9
 Summary:	Tk modules for Perl
 Group:		Development/Perl
 License:	GPL or Artistic
