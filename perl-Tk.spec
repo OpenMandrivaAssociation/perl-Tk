@@ -13,6 +13,7 @@ Patch0:		perl-Tk-widget.patch
 Patch1:		perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
 Patch2:		perl-Tk-seg.patch
+Patch3:		Tk-804.028-fix-str-fmt.patch
 Patch100:       perl-Tk-gif.patch
 Provides:	perl(Tk::TextReindex)
 Provides:	perl(Tk::LabRadio)
@@ -77,6 +78,7 @@ chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
 %patch1 -p1
 # patch to fix #235666 ... seems like caching code is broken
 %patch2
+%patch3 -p0
 %patch100 -p0 -b .CVE-2006-4484_CVE-2007-6697
 
 find . -type f | xargs perl -pi -e 's|^#!.*/bin/perl\S*|#!/usr/bin/perl|'
