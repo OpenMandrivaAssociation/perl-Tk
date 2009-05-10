@@ -2,7 +2,7 @@
 
 Name:		perl-%{module}
 Version:	804.028
-Release:	%mkrel 10
+Release:	%mkrel 11
 Summary:	Tk modules for Perl
 Group:		Development/Perl
 License:	GPL or Artistic
@@ -15,6 +15,8 @@ Patch1:		perl-Tk-debian.patch
 Patch2:		perl-Tk-seg.patch
 Patch3:		Tk-804.028-fix-str-fmt.patch
 Patch100:       perl-Tk-gif.patch
+# fix #50751
+Patch101:       perl-Tk-lastevent.patch
 Provides:	perl(Tk::TextReindex)
 Provides:	perl(Tk::LabRadio)
 # to remove on upgrade (misc)
@@ -80,6 +82,7 @@ chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
 %patch2
 %patch3 -p0
 %patch100 -p0 -b .CVE-2006-4484_CVE-2007-6697
+%patch101 -p0 -b .lastevent
 
 find . -type f | xargs perl -pi -e 's|^#!.*/bin/perl\S*|#!/usr/bin/perl|'
 # Make it lib64 aware, avoid patch
