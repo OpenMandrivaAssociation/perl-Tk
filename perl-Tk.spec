@@ -1,14 +1,15 @@
-%define	module	Tk
+%define	upstream_name    Tk
+%define	upstream_version 804.028
 
-Name:		perl-%{module}
-Version:	804.028
-Release:	%mkrel 11
+Name:		perl-%{upstream_name}
+Version:	%perl_convert_version %{upstream_version}
+Release:	%mkrel 12
+
 Summary:	Tk modules for Perl
+License:	GPL+ or Artistic
 Group:		Development/Perl
-License:	GPL or Artistic
-URL:		http://search.cpan.org/dist/%{module}
-Source0:	http://www.cpan.org/modules/by-module/Tk/%{module}-%{version}.tar.gz
-Patch0:		perl-Tk-widget.patch
+URL:		http://search.cpan.org/dist/%{upstream_name}
+Source0:	http://www.cpan.org/modules/by-module/Tk/%{upstream_name}-%{upstream_version}.tar.gz
 # modified version of http://ftp.de.debian.org/debian/pool/main/p/perl-tk/perl-tk_804.027-8.diff.gz
 Patch1:		perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
@@ -17,10 +18,7 @@ Patch3:		Tk-804.028-fix-str-fmt.patch
 Patch100:       perl-Tk-gif.patch
 # fix #50751
 Patch101:       perl-Tk-lastevent.patch
-Provides:	perl(Tk::TextReindex)
-Provides:	perl(Tk::LabRadio)
-# to remove on upgrade (misc)
-Obsoletes:	perl-Tk-PNG
+
 BuildRequires:	perl-devel
 BuildRequires:	jpeg-devel
 BuildRequires:	png-devel
@@ -28,7 +26,11 @@ BuildRequires:	pwlib-devel
 BuildRequires:	X11-devel
 BuildRequires:	libxft-devel
 BuildRequires:	libxrender-devel
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
+Buildroot: %{_tmppath}/%{name}-%{version}-%{release}
+Provides:	perl(Tk::TextReindex)
+Provides:	perl(Tk::LabRadio)
+# to remove on upgrade (misc)
+Obsoletes:	perl-Tk-PNG
 
 %package	devel
 Summary:	Tk modules for Perl (development package)
@@ -69,13 +71,8 @@ The licences for the various components differ, so check the copyright.
 This is the documentation package.
 
 %prep
-%setup -q -n %{module}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
-# fix for widget as docs
-%patch0
-%{__perl} -pi -e \
-'s,\@demopath\@,%{_datadir}/doc/%{name}-%{version}/demos,g' \
-%{_builddir}/Tk-%{version}/demos/widget
 # debian patch
 %patch1 -p1
 # patch to fix #235666 ... seems like caching code is broken
