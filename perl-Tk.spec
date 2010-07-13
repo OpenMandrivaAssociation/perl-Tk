@@ -1,9 +1,9 @@
 %define	upstream_name    Tk
-%define	upstream_version 804.028
+%define upstream_version 804.029
 
 Name:		perl-%{upstream_name}
 Version:	%perl_convert_version %{upstream_version}
-Release:	%mkrel 15
+Release:	%mkrel 1
 
 Summary:	Tk modules for Perl
 License:	GPL+ or Artistic
@@ -14,10 +14,6 @@ Source0:	http://www.cpan.org/modules/by-module/Tk/%{upstream_name}-%{upstream_ve
 Patch1:		perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
 Patch2:		perl-Tk-seg.patch
-Patch3:		Tk-804.028-fix-str-fmt.patch
-Patch100:       perl-Tk-gif.patch
-# fix #50751
-Patch101:       perl-Tk-lastevent.patch
 
 BuildRequires:	perl-devel
 BuildRequires:	jpeg-devel
@@ -77,9 +73,6 @@ chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
 %patch1 -p1
 # patch to fix #235666 ... seems like caching code is broken
 %patch2
-%patch3 -p0
-%patch100 -p0 -b .CVE-2006-4484_CVE-2007-6697
-%patch101 -p0 -b .lastevent
 
 find . -type f | xargs perl -pi -e 's|^#!.*/bin/perl\S*|#!/usr/bin/perl|'
 # Make it lib64 aware, avoid patch
@@ -117,7 +110,6 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/Tk.pm*
 %dir %{perl_vendorarch}/Tk
 %{perl_vendorarch}/Tk/*.pm*
-%{perl_vendorarch}/Tk/*.pl
 %{perl_vendorarch}/Tk/*.gif
 %{perl_vendorarch}/Tk/*.xbm
 %{perl_vendorarch}/Tk/*.xpm
@@ -129,7 +121,6 @@ rm -rf %{buildroot}
 %{perl_vendorarch}/Tk/Text
 %{perl_vendorarch}/Tk/demos
 %{perl_vendorarch}/auto/Tk
-%{perl_vendorarch}/fix_4_os2.pl
 
 %files devel
 %defattr(-,root,root)
