@@ -3,7 +3,7 @@
 
 Name:		perl-%{upstream_name}
 Version:	%perl_convert_version %{upstream_version}
-Release:	%mkrel 1
+Release:	%mkrel 2
 
 Summary:	Tk modules for Perl
 License:	GPL+ or Artistic
@@ -27,6 +27,10 @@ Provides:	perl(Tk::TextReindex)
 Provides:	perl(Tk::LabRadio)
 # to remove on upgrade (misc)
 Obsoletes:	perl-Tk-PNG
+
+# tie::watch no longer packaged separately
+Obsoletes:  perl-Tie-Watch
+Provides:   perl-Tie-Watch
 
 %package	devel
 Summary:	Tk modules for Perl (development package)
@@ -92,9 +96,8 @@ rm -rf %{buildroot}
 
 # Remove unpackaged files, add them if you find a use
 # Tie::Watch is packaged separately
-rm -f %{buildroot}%{perl_vendorarch}/{Tie/Watch.pm,Tk/prolog.ps}
+rm -f %{buildroot}%{perl_vendorarch}/Tk/prolog.ps
 rm -f %{buildroot}%{_mandir}/man1/{ptk{ed,sh},widget}.1*
-rm -f %{buildroot}%{_mandir}/man3/Tie::Watch.3pm*
 
 ## compress all .pm files (as using perl-PerlIO-gzip).
 #find %{buildroot} -name "*.pm" | xargs gzip -9
@@ -109,6 +112,7 @@ rm -rf %{buildroot}
 %{_mandir}/man*/*
 %{perl_vendorarch}/Tk.pm*
 %dir %{perl_vendorarch}/Tk
+%{perl_vendorarch}/Tie/Watch.pm
 %{perl_vendorarch}/Tk/*.pm*
 %{perl_vendorarch}/Tk/*.gif
 %{perl_vendorarch}/Tk/*.xbm
