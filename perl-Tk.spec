@@ -3,7 +3,7 @@
 
 Name:		perl-%{upstream_name}
 Version:	%perl_convert_version %{upstream_version}
-Release:	%mkrel 4
+Release:	%mkrel 5
 
 Summary:	Tk modules for Perl
 License:	GPL+ or Artistic
@@ -14,14 +14,14 @@ Source0:	http://www.cpan.org/modules/by-module/Tk/%{upstream_name}-%{upstream_ve
 Patch1:		perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
 Patch2:		perl-Tk-seg.patch
+Patch3:		Tk-804.029-xlib.patch
 
 BuildRequires:	perl-devel
 BuildRequires:	jpeg-devel
 BuildRequires:	png-devel
-BuildRequires:	pwlib-devel
-BuildRequires:	X11-devel
+BuildRequires:	libx11-devel
 BuildRequires:	libxft-devel
-BuildRequires:	libxrender-devel
+BuildRequires:	fontconfig-devel
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}
 Provides:	perl(Tk::TextReindex)
 Provides:	perl(Tk::LabRadio)
@@ -76,7 +76,8 @@ chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
 # debian patch
 %patch1 -p1
 # patch to fix #235666 ... seems like caching code is broken
-%patch2
+%patch2 -p0
+%patch3 -p0
 
 find . -type f | xargs perl -pi -e 's|^#!.*/bin/perl\S*|#!/usr/bin/perl|'
 # Make it lib64 aware, avoid patch
