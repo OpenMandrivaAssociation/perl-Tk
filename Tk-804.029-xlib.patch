@@ -1,0 +1,51 @@
+--- pTk/Xlib.h.xlib	2011-01-01 10:55:22.000000000 +0000
++++ pTk/Xlib.h	2011-01-01 10:55:22.000000000 +0000
+@@ -1,6 +1,6 @@
+ #ifndef _XLIB
+ #define _XLIB
+-#ifndef _XLIB_H_
++#ifndef _X11_XLIB_H_
+ extern XFontStruct *XLoadQueryFont  _ANSI_ARGS_((Display *, const char *));
+ extern XModifierKeymap *XGetModifierMapping  _ANSI_ARGS_((Display *));
+ extern XImage *XCreateImage  _ANSI_ARGS_((Display *, Visual *, unsigned int, int, int, char *, unsigned int, unsigned int, int, int));
+@@ -143,7 +143,7 @@
+ extern Window XGetSelectionOwner _ANSI_ARGS_((Display *, Atom));
+ extern int XRectInRegion _ANSI_ARGS_((Region,int,int,unsigned,unsigned));
+ extern int XSubtractRegion _ANSI_ARGS_((Region, Region, Region));
+-#endif /* _XLIB_H_ */
++#endif /* _X11_XLIB_H_ */
+ extern int _XInitImageFuncPtrs _ANSI_ARGS_((XImage *image));
+ #endif /* _XLIB */
+ 
+--- pTk/mTk/xlib/X11/Xlib.h.xlib	2011-01-01 10:55:22.000000000 +0000
++++ pTk/mTk/xlib/X11/Xlib.h	2011-01-01 10:55:22.000000000 +0000
+@@ -22,8 +22,8 @@
+  *	interface library (Xlib) to the X Window System Protocol (V11).
+  *	Structures and symbols starting with "_" are private to the library.
+  */
+-#ifndef _XLIB_H_
+-#define _XLIB_H_
++#ifndef _X11_XLIB_H_
++#define _X11_XLIB_H_
+ 
+ #define XlibSpecificationRelease 5
+ 
+@@ -1211,4 +1211,4 @@
+ #   undef Cursor
+ #endif
+ 
+-#endif /* _XLIB_H_ */
++#endif /* _X11_XLIB_H_ */
+--- pTk/tkVMacro.h.xlib	2011-01-01 10:55:22.000000000 +0000
++++ pTk/tkVMacro.h	2011-01-01 10:55:22.000000000 +0000
+@@ -6,8 +6,8 @@
+ #include "tk.m"
+ #endif
+ 
+-#if defined(_TK) || defined(_XLIB_H_)
+-# if !defined(_XLIB) && !defined(_XLIB_H_)
++#if defined(_TK) || defined(_X11_XLIB_H_)
++# if !defined(_XLIB) && !defined(_X11_XLIB_H_)
+ #  include <X11/Xlib.h>
+ # endif
+ # ifdef _TKINTXLIBDECLS

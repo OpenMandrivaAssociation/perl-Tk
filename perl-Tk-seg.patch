@@ -1,0 +1,44 @@
+--- pTk/mTk/generic/tkConfig.c.orig	2008-01-04 18:50:58.000000000 +0100
++++ pTk/mTk/generic/tkConfig.c	2008-01-05 00:15:15.000000000 +0100
+@@ -1210,11 +1210,12 @@
+      * First, check to see if the object already has the answer cached.
+      */
+ 
+-    if (objPtr->typePtr == &tkOptionObjType) {
+-        if (objPtr->internalRep.twoPtrValue.ptr1 == (VOID *) tablePtr) {
++/*    if (objPtr->typePtr == &tkOptionObjType) {
++        if (objPtr->internalRep.twoPtrValue.ptr1 == (VOID *) tablePtr
++	  && objPtr->internalRep.twoPtrValue.ptr2 != NULL) {
+             return (Option *) objPtr->internalRep.twoPtrValue.ptr2;
+         }
+-    }
++    }*/
+ 
+     /*
+      * The answer isn't cached.
+@@ -2277,9 +2278,15 @@
+     if (optionPtr == NULL) {
+ 	return NULL;
+     }
++
++    if (optionPtr->specPtr == NULL) {
++	return NULL;
++    }
++
+     if (optionPtr->specPtr->type == TK_OPTION_SYNONYM) {
+ 	optionPtr = optionPtr->extra.synonymPtr;
+     }
++
+     if (optionPtr->specPtr->objOffset >= 0) {
+ 	resultPtr = *((Tcl_Obj **) (recordPtr + optionPtr->specPtr->objOffset));
+ 	if (resultPtr == NULL) {
+--- pTk/mTk/generic/tkFrame.c.orig	2008-01-04 22:52:12.000000000 +0100
++++ pTk/mTk/generic/tkFrame.c	2008-01-04 23:51:20.000000000 +0100
+@@ -769,6 +769,7 @@
+ 	    result = TCL_ERROR;
+ 	    goto done;
+ 	}
++
+ 	objPtr = Tk_GetOptionValue(interp, (char *) framePtr,
+ 		framePtr->optionTable, objv[2], framePtr->tkwin);
+ 	if (objPtr == NULL) {
