@@ -1,15 +1,15 @@
-%define	upstream_name    Tk
-%define upstream_version 804.029
+%define	modname	Tk
+%define	modver	804.029
 
-Name:		perl-%{upstream_name}
-Version:	%perl_convert_version %{upstream_version}
-Release:	10
+Name:		perl-%{modname}
+Version:	%{perl_convert_version %{modver}}
+Release:	11
 
 Summary:	Tk modules for Perl
 License:	GPL+ or Artistic
 Group:		Development/Perl
-URL:		http://search.cpan.org/dist/%{upstream_name}
-Source0:	http://www.cpan.org/modules/by-module/Tk/%{upstream_name}-%{upstream_version}.tar.gz
+URL:		http://search.cpan.org/dist/%{modname}
+Source0:	http://www.cpan.org/modules/by-module/Tk/%{modname}-%{modver}.tar.gz
 # modified version of http://ftp.de.debian.org/debian/pool/main/p/perl-tk/perl-tk_804.027-8.diff.gz
 Patch1:		perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
@@ -24,7 +24,7 @@ BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(fontconfig)
 Provides:	perl(Tk::TextReindex)
 Provides:	perl(Tk::LabRadio)
-Provides:   perl-Tie-Watch
+Provides:	perl-Tie-Watch
 
 %package	devel
 Summary:	Tk modules for Perl (development package)
@@ -65,7 +65,7 @@ The licences for the various components differ, so check the copyright.
 This is the documentation package.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{modname}-%{modver}
 chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
 # debian patch
 %patch1 -p1
@@ -81,17 +81,17 @@ perl -pi -e "s,(/usr/X11(R6|\\*)|\\\$X11|\(\?:)/lib,\1/%{_lib},g" \
 perl -pi -e "s#--center#-c#" ./Tk/MMutil.pm
 
 %build
-%__perl Makefile.PL INSTALLDIRS=vendor XFT=1
+perl Makefile.PL INSTALLDIRS=vendor XFT=1
 %make OPTIMIZE="%{optflags}" LD_RUN_PATH=""
 
 %install
 %makeinstall_std
-%__chmod 644 %{buildroot}%{_mandir}/man3*/*
+chmod 644 %{buildroot}%{_mandir}/man3*/*
 
 # Remove unpackaged files, add them if you find a use
 # Tie::Watch is packaged separately
-rm -f %{buildroot}%{perl_vendorarch}/Tk/prolog.ps
-rm -f %{buildroot}%{_mandir}/man1/{ptk{ed,sh},widget}.1*
+rm %{buildroot}%{perl_vendorarch}/Tk/prolog.ps
+rm %{buildroot}%{_mandir}/man1/{ptk{ed,sh},widget}.1*
 
 ## compress all .pm files (as using perl-PerlIO-gzip).
 #find %{buildroot} -name "*.pm" | xargs gzip -9
@@ -133,6 +133,10 @@ rm -f %{buildroot}%{_mandir}/man1/{ptk{ed,sh},widget}.1*
 
 
 %changelog
+* Fri Dec 21 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 804.29.0-11
+- rebuild for perl-5.16.2
+- cleanups
+
 * Sun Jan 22 2012 Oden Eriksson <oeriksson@mandriva.com> 804.29.0-9mdv2012.0
 + Revision: 765793
 - rebuilt for perl-5.14.2
