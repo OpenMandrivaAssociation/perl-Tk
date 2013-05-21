@@ -3,7 +3,7 @@
 
 Name:		perl-%{modname}
 Version:	%{perl_convert_version %{modver}}
-Release:	11
+Release:	12
 
 Summary:	Tk modules for Perl
 License:	GPL+ or Artistic
