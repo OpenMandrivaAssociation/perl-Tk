@@ -81,7 +81,7 @@ perl -pi -e "s#--center#-c#" ./Tk/MMutil.pm
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor XFT=1
-%make OPTIMIZE="%{optflags}" LD_RUN_PATH=""
+%make OPTIMIZE="%{optflags} -fPIC" LD_RUN_PATH=""
 
 %install
 %makeinstall_std
