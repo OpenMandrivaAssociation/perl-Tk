@@ -1,14 +1,15 @@
 %define	modname	Tk
-%define	modver	804.029
+%define modver 804.032
 
 Summary:	Tk modules for Perl
+
 Name:		perl-%{modname}
-Version:	%{perl_convert_version %{modver}}
-Release:	16
+Version:	%perl_convert_version %{modver}
+Release:	1
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		http://search.cpan.org/dist/%{modname}
-Source0:	http://www.cpan.org/modules/by-module/Tk/%{modname}-%{modver}.tar.gz
+Source0:	http://www.cpan.org/modules/by-module/%{modname}/%{modname}-%{modver}.tar.gz
 # modified version of http://ftp.de.debian.org/debian/pool/main/p/perl-tk/perl-tk_804.027-8.diff.gz
 Patch1:		perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
@@ -35,6 +36,7 @@ The licences for the various components differ, so check the copyright.
 
 %package	devel
 Summary:	Tk modules for Perl (development package)
+
 Group:		Development/C
 Requires:	perl-Tk = %{version}-%{release}
 
@@ -50,6 +52,7 @@ This is the development package.
 
 %package	doc
 Summary:	Tk modules for Perl (documentation package)
+
 Group:		Development/Perl
 Requires:	perl-Tk = %{version}-%{release}
 
@@ -130,4 +133,5 @@ rm %{buildroot}%{_mandir}/man1/{ptk{ed,sh},widget}.1*
 %{perl_vendorarch}/Tk.pod
 %{perl_vendorarch}/Tk/*.pod
 %{perl_vendorarch}/Tk/README.Adjust
+
 
