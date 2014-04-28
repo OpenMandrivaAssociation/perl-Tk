@@ -1,6 +1,7 @@
---- perl-tk-804.027.orig/objGlue.c
-+++ perl-tk-804.027/objGlue.c
-@@ -529,6 +529,10 @@
+diff -Naur Tk-804.032.orig/objGlue.c Tk-804.032/objGlue.c
+--- Tk-804.032.orig/objGlue.c	2014-04-28 19:54:40.000000000 +0400
++++ Tk-804.032/objGlue.c	2014-04-28 19:54:40.000000000 +0400
+@@ -554,6 +554,10 @@
        sv_utf8_upgrade(objPtr);
  #endif
       s = SvPV(objPtr, len);
@@ -11,7 +12,7 @@
  #ifdef SvUTF8
       if (!is_utf8_string(s,len))
        {
-@@ -555,6 +559,10 @@
+@@ -581,6 +585,10 @@
     else
      {
       s = LangString(objPtr);
@@ -22,8 +23,9 @@
  #ifdef SvUTF8
       if (!is_utf8_string(s,strlen(s)))
        {
---- perl-tk-804.027.orig/pTk/mTk/generic/tkFont.c
-+++ perl-tk-804.027/pTk/mTk/generic/tkFont.c
+diff -Naur Tk-804.032.orig/pTk/mTk/generic/tkFont.c Tk-804.032/pTk/mTk/generic/tkFont.c
+--- Tk-804.032.orig/pTk/mTk/generic/tkFont.c	2014-04-28 19:54:40.000000000 +0400
++++ Tk-804.032/pTk/mTk/generic/tkFont.c	2014-04-28 19:54:40.000000000 +0400
 @@ -1044,6 +1044,7 @@
      TkFont *fontPtr, *firstFontPtr, *oldFontPtr;
      int new, descent;

@@ -14,7 +14,6 @@ Source0:	http://www.cpan.org/modules/by-module/%{modname}/%{modname}-%{modver}.t
 Patch1:		perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
 Patch2:		perl-Tk-seg.patch
-Patch3:		Tk-804.029-xlib.patch
 
 BuildRequires:	perl-devel
 BuildRequires:	jpeg-devel
@@ -72,8 +71,7 @@ chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
 # debian patch
 %patch1 -p1
 # patch to fix #235666 ... seems like caching code is broken
-%patch2 -p0
-%patch3 -p0
+%patch2 -p1
 
 find . -type f | xargs perl -pi -e 's|^#!.*/bin/perl\S*|#!/usr/bin/perl|'
 # Make it lib64 aware, avoid patch
