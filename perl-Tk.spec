@@ -1,11 +1,11 @@
 %define	modname	Tk
-%define modver 804.032
+%define modver 804.033
 
 Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
 Version:	%perl_convert_version %{modver}
-Release:	6
+Release:	1
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		http://search.cpan.org/dist/%{modname}
@@ -131,5 +131,3 @@ rm %{buildroot}%{_mandir}/man1/{ptk{ed,sh},widget}.1*
 %{perl_vendorarch}/Tk.pod
 %{perl_vendorarch}/Tk/*.pod
 %{perl_vendorarch}/Tk/README.Adjust
-
-
