@@ -1,11 +1,11 @@
 %define	modname	Tk
-%define modver 804.032
+%define modver 804.034
 
 Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
 Version:	%perl_convert_version %{modver}
-Release:	7
+Release:	1
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		http://search.cpan.org/dist/%{modname}
@@ -66,12 +66,8 @@ The licences for the various components differ, so check the copyright.
 This is the documentation package.
 
 %prep
-%setup -qn %{modname}-%{modver}
+%autosetup -p1 -n %{modname}-%{modver}
 chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
-# debian patch
-%patch1 -p1
-# patch to fix #235666 ... seems like caching code is broken
-%patch2 -p1
 
 find . -type f | xargs perl -pi -e 's|^#!.*/bin/perl\S*|#!/usr/bin/perl|'
 # Make it lib64 aware, avoid patch
@@ -90,8 +86,8 @@ chmod 644 %{buildroot}%{_mandir}/man3*/*
 
 # Remove unpackaged files, add them if you find a use
 # Tie::Watch is packaged separately
-rm %{buildroot}%{perl_vendorarch}/Tk/prolog.ps
-rm %{buildroot}%{_mandir}/man1/{ptk{ed,sh},widget}.1*
+rm -f %{buildroot}%{perl_vendorarch}/Tk/prolog.ps
+rm -f %{buildroot}%{_mandir}/man1/{ptk{ed,sh},widget}.1*
 
 ## compress all .pm files (as using perl-PerlIO-gzip).
 #find %{buildroot} -name "*.pm" | xargs gzip -9
@@ -131,5 +127,3 @@ rm %{buildroot}%{_mandir}/man1/{ptk{ed,sh},widget}.1*
 %{perl_vendorarch}/Tk.pod
 %{perl_vendorarch}/Tk/*.pod
 %{perl_vendorarch}/Tk/README.Adjust
-
-

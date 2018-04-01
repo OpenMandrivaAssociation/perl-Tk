@@ -1,7 +1,7 @@
-diff -Naur Tk-804.032.orig/objGlue.c Tk-804.032/objGlue.c
---- Tk-804.032.orig/objGlue.c	2014-04-28 19:54:40.000000000 +0400
-+++ Tk-804.032/objGlue.c	2014-04-28 19:54:40.000000000 +0400
-@@ -554,6 +554,10 @@
+diff -up Tk-804.034/objGlue.c.1~ Tk-804.034/objGlue.c
+--- Tk-804.034/objGlue.c.1~	2014-11-16 21:29:00.000000000 +0000
++++ Tk-804.034/objGlue.c	2018-04-01 15:08:32.105172129 +0000
+@@ -560,6 +560,10 @@ Tcl_GetStringFromObj (Tcl_Obj *objPtr, i
        sv_utf8_upgrade(objPtr);
  #endif
       s = SvPV(objPtr, len);
@@ -12,21 +12,19 @@ diff -Naur Tk-804.032.orig/objGlue.c Tk-804.032/objGlue.c
  #ifdef SvUTF8
       if (!is_utf8_string(s,len))
        {
-@@ -581,6 +585,10 @@
+@@ -587,6 +591,8 @@ Tcl_GetStringFromObj (Tcl_Obj *objPtr, i
     else
      {
       s = LangString(objPtr);
 +     if (!s)
-+      {
 +       return NULL;
-+      }
  #ifdef SvUTF8
+ # ifdef NEED_FIX_BUGGY_UTF8_STRING
       if (!is_utf8_string(s,strlen(s)))
-       {
-diff -Naur Tk-804.032.orig/pTk/mTk/generic/tkFont.c Tk-804.032/pTk/mTk/generic/tkFont.c
---- Tk-804.032.orig/pTk/mTk/generic/tkFont.c	2014-04-28 19:54:40.000000000 +0400
-+++ Tk-804.032/pTk/mTk/generic/tkFont.c	2014-04-28 19:54:40.000000000 +0400
-@@ -1044,6 +1044,7 @@
+diff -up Tk-804.034/pTk/mTk/generic/tkFont.c.1~ Tk-804.034/pTk/mTk/generic/tkFont.c
+--- Tk-804.034/pTk/mTk/generic/tkFont.c.1~	2013-11-18 09:04:04.000000000 +0000
++++ Tk-804.034/pTk/mTk/generic/tkFont.c	2018-04-01 15:07:22.762124619 +0000
+@@ -1044,6 +1044,7 @@ Tk_AllocFontFromObj(interp, tkwin, objPt
      TkFont *fontPtr, *firstFontPtr, *oldFontPtr;
      int new, descent;
      NamedFont *nfPtr;
@@ -34,7 +32,7 @@ diff -Naur Tk-804.032.orig/pTk/mTk/generic/tkFont.c Tk-804.032/pTk/mTk/generic/t
  
      fiPtr = ((TkWindow *) tkwin)->mainPtr->fontInfoPtr;
      if (objPtr->typePtr != &tkFontObjType) {
-@@ -1077,8 +1078,12 @@
+@@ -1077,8 +1078,12 @@ Tk_AllocFontFromObj(interp, tkwin, objPt
  	cacheHashPtr = oldFontPtr->cacheHashPtr;
  	FreeFontObjProc(objPtr);
      } else {
@@ -48,7 +46,7 @@ diff -Naur Tk-804.032.orig/pTk/mTk/generic/tkFont.c Tk-804.032/pTk/mTk/generic/t
      }
      firstFontPtr = (TkFont *) Tcl_GetHashValue(cacheHashPtr);
      for (fontPtr = firstFontPtr; (fontPtr != NULL);
-@@ -1095,8 +1100,12 @@
+@@ -1095,8 +1100,12 @@ Tk_AllocFontFromObj(interp, tkwin, objPt
       * The desired font isn't in the table.  Make a new one.
       */
  
@@ -62,7 +60,7 @@ diff -Naur Tk-804.032.orig/pTk/mTk/generic/tkFont.c Tk-804.032/pTk/mTk/generic/t
      if (namedHashPtr != NULL) {
  	/*
  	 * Construct a font based on a named font.
-@@ -1111,7 +1120,7 @@
+@@ -1111,7 +1120,7 @@ Tk_AllocFontFromObj(interp, tkwin, objPt
  	 * Native font?
  	 */
  
