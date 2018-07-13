@@ -15,6 +15,7 @@ Patch1:		perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
 Patch2:		perl-Tk-seg.patch
 
+BuildRequires:	perl(open)
 BuildRequires:	perl-devel
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(libpng)
