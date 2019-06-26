@@ -78,8 +78,9 @@ perl -pi -e "s,(/usr/X11(R6|\\*)|\\\$X11|\(\?:)/lib,\1/%{_lib},g" \
 perl -pi -e "s#--center#-c#" ./Tk/MMutil.pm
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor XFT=1
-%make OPTIMIZE="%{optflags} -fPIC" LD_RUN_PATH=""
+%{__perl} Makefile.PL INSTALLDIRS=vendor X11LIB=%{_libdir} XFT=1
+find . -name Makefile | xargs %{__perl} -pi -e 's/^\tLD_RUN_PATH=[^\s]+\s*/\t/'
+%make_build
 
 %install
 %makeinstall_std
