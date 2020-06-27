@@ -1,11 +1,11 @@
 %define	modname	Tk
-%define modver 804.034
+%define modver 804.035
 
 Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
 Version:	%perl_convert_version %{modver}
-Release:	4
+Release:	1
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		http://metacpan.org/pod/Tk
@@ -83,7 +83,7 @@ find . -name Makefile | xargs %{__perl} -pi -e 's/^\tLD_RUN_PATH=[^\s]+\s*/\t/'
 %make_build
 
 %install
-%makeinstall_std
+%make_install
 chmod 644 %{buildroot}%{_mandir}/man3*/*
 
 # Remove unpackaged files, add them if you find a use
