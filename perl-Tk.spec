@@ -1,5 +1,5 @@
 %define	modname	Tk
-%define modver 804.035
+%define modver 804.036
 
 Summary:	Tk modules for Perl
 
