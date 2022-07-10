@@ -1,5 +1,9 @@
 %define	modname	Tk
 %define modver 804.036
+%ifarch %{x86_64}
+# FIXME workaround for debuginfo bug
+%global _debugsource_template %{nil}
+%endif
 
 Summary:	Tk modules for Perl
 
