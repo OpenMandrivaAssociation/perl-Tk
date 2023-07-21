@@ -1,0 +1,24 @@
+diff -up Tk-804.036/pTk/Xlib.t.omv~ Tk-804.036/pTk/Xlib.t
+--- Tk-804.036/pTk/Xlib.t.omv~	2023-07-21 17:54:21.229841811 +0200
++++ Tk-804.036/pTk/Xlib.t	2023-07-21 17:55:01.316160091 +0200
+@@ -331,7 +331,7 @@ VFUNC(int,XIntersectRegion,V_XIntersectR
+ #endif /* !DO_X_EXCLUDE */
+ 
+ #ifndef XKeycodeToKeysym
+-VFUNC(KeySym,XKeycodeToKeysym,V_XKeycodeToKeysym,_ANSI_ARGS_((Display *, unsigned int, int)))
++VFUNC(KeySym,XKeycodeToKeysym,V_XKeycodeToKeysym,_ANSI_ARGS_((Display *, KeyCode, int)))
+ #endif /* #ifndef XKeycodeToKeysym */
+ 
+ #ifndef XKeysymToString
+diff -up Tk-804.036/pTk/Xlib.h.omv~ Tk-804.036/pTk/Xlib.h
+--- Tk-804.036/pTk/Xlib.h.omv~	2023-07-21 17:58:46.595995259 +0200
++++ Tk-804.036/pTk/Xlib.h	2023-07-21 17:58:54.330059434 +0200
+@@ -20,7 +20,7 @@ extern Pixmap XCreateBitmapFromData  _AN
+ extern Window XCreateWindow  _ANSI_ARGS_((Display *, Window, int, int, unsigned int, unsigned int, unsigned int, int, unsigned int, Visual *, long unsigned int, XSetWindowAttributes *));
+ extern Atom *XListProperties  _ANSI_ARGS_((Display *, Window, int *));
+ extern XHostAddress *XListHosts  _ANSI_ARGS_((Display *, int *, int *));
+-extern KeySym XKeycodeToKeysym  _ANSI_ARGS_((Display *, unsigned int, int));
++extern KeySym XKeycodeToKeysym  _ANSI_ARGS_((Display *, KeyCode, int));
+ extern KeySym XStringToKeysym  _ANSI_ARGS_((const char *));
+ extern VisualID XVisualIDFromVisual  _ANSI_ARGS_((Visual *));
+ extern Window XRootWindow  _ANSI_ARGS_((Display *, int));

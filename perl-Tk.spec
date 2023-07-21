@@ -1,23 +1,23 @@
 %define	modname	Tk
-%define modver 804.036
 %ifarch %{x86_64}
 # FIXME workaround for debuginfo bug
-%global _debugsource_template %{nil}
+%undefine _debugsource_packages
 %endif
 
 Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
-Version:	%perl_convert_version %{modver}
+Version:	804.036
 Release:	2
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		http://metacpan.org/pod/Tk
-Source0:	http://www.cpan.org/modules/by-module/%{modname}/%{modname}-%{modver}.tar.gz
+Source0:	http://www.cpan.org/modules/by-module/%{modname}/%{modname}-%{version}.tar.gz
 # modified version of http://ftp.de.debian.org/debian/pool/main/p/perl-tk/perl-tk_804.027-8.diff.gz
 Patch1:		perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
 Patch2:		perl-Tk-seg.patch
+Patch3:		perl-Tk-compile.patch
 
 BuildRequires:	perl(open)
 BuildRequires:	perl-devel
@@ -71,7 +71,7 @@ The licences for the various components differ, so check the copyright.
 This is the documentation package.
 
 %prep
-%autosetup -p1 -n %{modname}-%{modver}
+%autosetup -p1 -n %{modname}-%{version}
 chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
 
 find . -type f | xargs sed -i -e 's|^#!.*/bin/perl[[:space:]]+|#!/usr/bin/perl |;s|^#!.*/bin/perl$|#!/usr/bin/perl|'
