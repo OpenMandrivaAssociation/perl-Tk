@@ -1,23 +1,22 @@
 %define	modname	Tk
-%ifarch %{x86_64}
-# FIXME workaround for debuginfo bug
 %undefine _debugsource_packages
-%endif
 
 Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
 Version:	804.036
-Release:	2
+Release:	3
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		http://metacpan.org/pod/Tk
 Source0:	http://www.cpan.org/modules/by-module/%{modname}/%{modname}-%{version}.tar.gz
+Patch0:		https://src.fedoraproject.org/rpms/perl-Tk/raw/rawhide/f/perl-Tk-widget.patch
 # modified version of http://ftp.de.debian.org/debian/pool/main/p/perl-tk/perl-tk_804.027-8.diff.gz
-Patch1:		perl-Tk-debian.patch
+Patch1:		https://src.fedoraproject.org/rpms/perl-Tk/blob/rawhide/f/perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
-Patch2:		perl-Tk-seg.patch
+Patch2:		https://src.fedoraproject.org/rpms/perl-Tk/raw/rawhide/f/perl-Tk-seg.patch
 Patch3:		perl-Tk-compile.patch
+Patch4:		https://github.com/eserte/perl-tk/pull/91.patch
 
 BuildRequires:	perl(open)
 BuildRequires:	perl-devel

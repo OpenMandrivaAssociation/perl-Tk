@@ -1,15 +1,13 @@
-diff -Naur Tk-804.032.orig/pTk/mTk/generic/tkConfig.c Tk-804.032/pTk/mTk/generic/tkConfig.c
---- Tk-804.032.orig/pTk/mTk/generic/tkConfig.c	2014-04-28 19:55:25.000000000 +0400
-+++ Tk-804.032/pTk/mTk/generic/tkConfig.c	2014-04-28 19:55:26.000000000 +0400
-@@ -1210,11 +1210,12 @@
+diff -up Tk-804.028/pTk/mTk/generic/tkConfig.c.seg Tk-804.028/pTk/mTk/generic/tkConfig.c
+--- Tk-804.028/pTk/mTk/generic/tkConfig.c.seg	2008-03-11 23:29:39.000000000 -0400
++++ Tk-804.028/pTk/mTk/generic/tkConfig.c	2008-03-11 23:28:09.000000000 -0400
+@@ -1210,11 +1210,11 @@ GetOptionFromObj(interp, objPtr, tablePt
       * First, check to see if the object already has the answer cached.
       */
  
 -    if (objPtr->typePtr == &tkOptionObjType) {
--        if (objPtr->internalRep.twoPtrValue.ptr1 == (VOID *) tablePtr) {
 +/*    if (objPtr->typePtr == &tkOptionObjType) {
-+        if (objPtr->internalRep.twoPtrValue.ptr1 == (VOID *) tablePtr
-+	  && objPtr->internalRep.twoPtrValue.ptr2 != NULL) {
+         if (objPtr->internalRep.twoPtrValue.ptr1 == (VOID *) tablePtr) {
              return (Option *) objPtr->internalRep.twoPtrValue.ptr2;
          }
 -    }
@@ -17,7 +15,7 @@ diff -Naur Tk-804.032.orig/pTk/mTk/generic/tkConfig.c Tk-804.032/pTk/mTk/generic
  
      /*
       * The answer isn't cached.
-@@ -2277,9 +2278,15 @@
+@@ -2277,9 +2277,15 @@ Tk_GetOptionValue(interp, recordPtr, opt
      if (optionPtr == NULL) {
  	return NULL;
      }
@@ -33,14 +31,3 @@ diff -Naur Tk-804.032.orig/pTk/mTk/generic/tkConfig.c Tk-804.032/pTk/mTk/generic
      if (optionPtr->specPtr->objOffset >= 0) {
  	resultPtr = *((Tcl_Obj **) (recordPtr + optionPtr->specPtr->objOffset));
  	if (resultPtr == NULL) {
-diff -Naur Tk-804.032.orig/pTk/mTk/generic/tkFrame.c Tk-804.032/pTk/mTk/generic/tkFrame.c
---- Tk-804.032.orig/pTk/mTk/generic/tkFrame.c	2014-04-28 19:55:25.000000000 +0400
-+++ Tk-804.032/pTk/mTk/generic/tkFrame.c	2014-04-28 19:55:26.000000000 +0400
-@@ -769,6 +769,7 @@
- 	    result = TCL_ERROR;
- 	    goto done;
- 	}
-+
- 	objPtr = Tk_GetOptionValue(interp, (char *) framePtr,
- 		framePtr->optionTable, objv[2], framePtr->tkwin);
- 	if (objPtr == NULL) {
