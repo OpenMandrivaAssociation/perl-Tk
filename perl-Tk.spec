@@ -8,7 +8,7 @@ Version:	804.036
 Release:	3
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
-Url:		http://metacpan.org/pod/Tk
+Url:		https://metacpan.org/pod/Tk
 Source0:	http://www.cpan.org/modules/by-module/%{modname}/%{modname}-%{version}.tar.gz
 Patch0:		https://src.fedoraproject.org/rpms/perl-Tk/raw/rawhide/f/perl-Tk-widget.patch
 # modified version of http://ftp.de.debian.org/debian/pool/main/p/perl-tk/perl-tk_804.027-8.diff.gz
