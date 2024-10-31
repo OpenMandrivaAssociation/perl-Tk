@@ -5,7 +5,7 @@ Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
 Version:	804.036
-Release:	3
+Release:	4
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		https://metacpan.org/pod/Tk
