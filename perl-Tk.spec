@@ -18,6 +18,7 @@ Patch2:		https://src.fedoraproject.org/rpms/perl-Tk/raw/rawhide/f/perl-Tk-seg.pa
 Patch3:		perl-Tk-compile.patch
 Patch4:		https://github.com/eserte/perl-tk/pull/91.patch
 
+BuildRequires:	make
 BuildRequires:	perl(open)
 BuildRequires:	perl-devel
 BuildRequires:	jpeg-devel
