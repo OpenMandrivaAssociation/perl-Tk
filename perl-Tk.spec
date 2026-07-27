@@ -5,7 +5,7 @@ Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
 Version:	804.036
-Release:	9
+Release:	10
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		https://metacpan.org/pod/Tk
@@ -77,12 +77,23 @@ The licences for the various components differ, so check the copyright.
 This is the documentation package.
 
 %prep
-%autosetup -p1 -F2 -n %{modname}-%{version}
+%setup -q -n %{modname}-%{version}
+# widget patch paths are demos/widget (needs -p0)
+%patch -P0 -p0 -b .widget
+%patch -P1 -p1 -b .debian -F2
+%patch -P2 -p1 -b .seg -F2
+%patch -P3 -p1 -b .compile -F2
+%patch -P4 -p1 -b .pr91 -F2
+%patch -P11 -p1 -b .strlen -F2
+%patch -P13 -p1 -b .pregcomp -F2
+%patch -P14 -p1 -b .oldwarn -F2
+%patch -P15 -p1 -b .gettext -F2
+
 chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
 
 find . -type f | xargs sed -i -e 's|^#!.*/bin/perl[[:space:]]+|#!/usr/bin/perl |;s|^#!.*/bin/perl$|#!/usr/bin/perl|'
 # Make it lib64 aware, avoid patch
-perl -pi -e "s,(/usr/X11(R6|\\*)|\\\$X11|\(\?:)/lib,\1/%{_lib},g" \
+perl -pi -e "s,(/usr/X11(R6|\\*)|\\$X11|(?:)/lib,\\1/%{_lib},g" \
   myConfig pTk/mTk/{unix,tixUnix/{itcl2.0,tk4.0}}/configure
 #(peroyvind) --center does no longer seem to be working, obsoleted by -c
 perl -pi -e "s#--center#-c#" ./Tk/MMutil.pm
