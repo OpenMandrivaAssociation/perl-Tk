@@ -5,7 +5,7 @@ Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
 Version:	804.036
-Release:	6
+Release:	7
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		https://metacpan.org/pod/Tk
@@ -17,6 +17,14 @@ Patch1:		https://src.fedoraproject.org/rpms/perl-Tk/blob/rawhide/f/perl-Tk-debia
 Patch2:		https://src.fedoraproject.org/rpms/perl-Tk/raw/rawhide/f/perl-Tk-seg.patch
 Patch3:		perl-Tk-compile.patch
 Patch4:		https://github.com/eserte/perl-tk/pull/91.patch
+
+# From Fedora rawhide - perl 5.38+ / clang 16
+Patch10: perl-Tk-c99.patch
+Patch11: perl-Tk-Fix-STRLEN-vs-int-pointer-confusion-in-Tcl_GetByteAr.patch
+Patch12: perl-Tk-Fix-build-with-clang-16.patch
+Patch13: perl-Tk-pregcomp2.c-Avoid-using-incompatible-pointer-type.patch
+Patch14: perl-Tk-Avoid-using-incompatible-pointer-type-for-old_warn.patch
+Patch15: perl-Tk-Fix-incompatible-pointer-type-in-function-GetTextIndex.patch
 
 BuildRequires:	make
 BuildRequires:	perl(open)
@@ -82,6 +90,9 @@ perl -pi -e "s,(/usr/X11(R6|\\*)|\\\$X11|\(\?:)/lib,\1/%{_lib},g" \
 perl -pi -e "s#--center#-c#" ./Tk/MMutil.pm
 
 %build
+# Allow residual pointer-sign noise if any remain after patches
+export CFLAGS="${CFLAGS:-} -Wno-error=incompatible-pointer-types -Wno-error=int-conversion"
+export CXXFLAGS="${CXXFLAGS:-} -Wno-error=incompatible-pointer-types"
 %{__perl} Makefile.PL INSTALLDIRS=vendor X11LIB=%{_libdir} XFT=1
 find . -name Makefile | xargs %{__perl} -pi -e 's/^\tLD_RUN_PATH=[^\s]+\s*/\t/'
 %make_build
