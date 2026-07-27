@@ -5,18 +5,18 @@ Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
 Version:	804.036
-Release:	8
+Release:	9
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		https://metacpan.org/pod/Tk
 Source0:	http://www.cpan.org/modules/by-module/%{modname}/%{modname}-%{version}.tar.gz
-Patch0:		https://src.fedoraproject.org/rpms/perl-Tk/raw/rawhide/f/perl-Tk-widget.patch
+Patch0:	perl-Tk-widget.patch
 # modified version of http://ftp.de.debian.org/debian/pool/main/p/perl-tk/perl-tk_804.027-8.diff.gz
-Patch1:		https://src.fedoraproject.org/rpms/perl-Tk/blob/rawhide/f/perl-Tk-debian.patch
+Patch1:	perl-Tk-debian.patch
 # fix segfaults as in #235666 because of broken cashing code
-Patch2:		https://src.fedoraproject.org/rpms/perl-Tk/raw/rawhide/f/perl-Tk-seg.patch
+Patch2:	perl-Tk-seg.patch
 Patch3:		perl-Tk-compile.patch
-Patch4:		https://github.com/eserte/perl-tk/pull/91.patch
+Patch4:	91.patch
 
 # From Fedora rawhide - perl 5.38+ / clang 16
 Patch11: perl-Tk-Fix-STRLEN-vs-int-pointer-confusion-in-Tcl_GetByteAr.patch
@@ -77,7 +77,7 @@ The licences for the various components differ, so check the copyright.
 This is the documentation package.
 
 %prep
-%autosetup -p1 -n %{modname}-%{version}
+%autosetup -p1 -F2 -n %{modname}-%{version}
 chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
 
 find . -type f | xargs sed -i -e 's|^#!.*/bin/perl[[:space:]]+|#!/usr/bin/perl |;s|^#!.*/bin/perl$|#!/usr/bin/perl|'
