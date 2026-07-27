@@ -5,7 +5,7 @@ Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
 Version:	804.036
-Release:	10
+Release:	12
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		https://metacpan.org/pod/Tk
@@ -93,8 +93,11 @@ chmod -x pod/Popup.pod Tixish/lib/Tk/balArrow.xbm
 
 find . -type f | xargs sed -i -e 's|^#!.*/bin/perl[[:space:]]+|#!/usr/bin/perl |;s|^#!.*/bin/perl$|#!/usr/bin/perl|'
 # Make it lib64 aware, avoid patch
-perl -pi -e "s,(/usr/X11(R6|\\*)|\\$X11|(?:)/lib,\\1/%{_lib},g" \
-  myConfig pTk/mTk/{unix,tixUnix/{itcl2.0,tk4.0}}/configure
+for f in myConfig pTk/mTk/unix/configure \
+         pTk/mTk/tixUnix/itcl2.0/configure pTk/mTk/tixUnix/tk4.0/configure; do
+  [ -f "$f" ] || continue
+  perl -pi -e "s,(/usr/X11(R6|\\*)|\\\$X11|\\(\\?:)/lib,\\1/%{_lib},g" "$f"
+done
 #(peroyvind) --center does no longer seem to be working, obsoleted by -c
 perl -pi -e "s#--center#-c#" ./Tk/MMutil.pm
 
