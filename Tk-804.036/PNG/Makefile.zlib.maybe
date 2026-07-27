@@ -1,0 +1,55 @@
+#!perl
+use Cwd;
+use Config;
+use File::Copy;
+#warn __FILE__." in ".getcwd()."\n";
+if ($^O eq 'MSWin32')
+ {
+  my $file;
+  chmod(0666,'Makefile');
+  if ($Config{'cc'} =~ /gcc/)
+   {
+    $file = "win32/Makefile.gcc";
+   }
+  else
+   {
+    $file = 'win32/Makefile.msc';
+    warn "Assuming ".$Config{'cc'}." is visual C of some kind\n";
+   }
+  copy($file,"Makefile")
+   || die "Cannot copy $file to Makefile: $!";
+
+  # overwrite zconf.h with original zconf.in.h
+  copy("zconf.in.h", "zconf.h")
+   || die "Cannot copy zconf.in.h to zconf.h: $!";
+ }
+else
+ {
+  $ENV{CC} = $Config{cc};
+  local $ENV{CFLAGS} = "$Config{ccflags} $Config{cccdlflags}";
+  system(sh => "./configure");
+ }
+
+my $seen_empty_rule;
+open my $fh, '<', 'Makefile' or die "Error opening Makefile: $!";
+while(<$fh>)
+ {
+  if (/# Empty rule needed/)
+   {
+    $seen_empty_rule = 1;
+    last;
+   }
+ }
+if (!$seen_empty_rule)
+ {
+  open my $ofh, '>>', 'Makefile' or die "Error appending to Makefile: $!";
+  print $ofh <<'EOF';
+
+# Empty rule needed since ExtUtils::MakeMaker 7.18 (see https://rt.cpan.org/Ticket/Display.html?id=117800)
+test_dynamic:
+
+EOF
+  close $ofh or die "Error closing Makefile: $!";
+}
+
+1;

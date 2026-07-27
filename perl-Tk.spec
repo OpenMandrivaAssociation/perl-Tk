@@ -5,7 +5,7 @@ Summary:	Tk modules for Perl
 
 Name:		perl-%{modname}
 Version:	804.036
-Release:	7
+Release:	8
 License:	GPLv2+ or Artistic
 Group:		Development/Perl
 Url:		https://metacpan.org/pod/Tk
@@ -19,9 +19,7 @@ Patch3:		perl-Tk-compile.patch
 Patch4:		https://github.com/eserte/perl-tk/pull/91.patch
 
 # From Fedora rawhide - perl 5.38+ / clang 16
-Patch10: perl-Tk-c99.patch
 Patch11: perl-Tk-Fix-STRLEN-vs-int-pointer-confusion-in-Tcl_GetByteAr.patch
-Patch12: perl-Tk-Fix-build-with-clang-16.patch
 Patch13: perl-Tk-pregcomp2.c-Avoid-using-incompatible-pointer-type.patch
 Patch14: perl-Tk-Avoid-using-incompatible-pointer-type-for-old_warn.patch
 Patch15: perl-Tk-Fix-incompatible-pointer-type-in-function-GetTextIndex.patch
